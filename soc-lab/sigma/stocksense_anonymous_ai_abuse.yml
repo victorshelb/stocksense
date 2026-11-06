@@ -1,0 +1,31 @@
+title: StockSense - Anonymous AI Cost Abuse
+id: 2f7b9c1d-5a3e-4f8b-9c0d-6e1a2b3c4d5e
+status: experimental
+description: >
+  A burst of unauthenticated calls to the metered, paid AI endpoint from one
+  source IP. The frontend only calls these endpoints for logged-in users, so a
+  high volume with authenticated=false indicates direct API abuse aimed at
+  running up Anthropic API cost (resource hijacking / financial denial of service).
+references:
+  - https://attack.mitre.org/techniques/T1496/
+author: SOC Lab (StockSense)
+date: 2026/06/27
+logsource:
+  product: stocksense
+  service: security
+detection:
+  selection:
+    event.code: 'ai.invoke'
+    stocksense.authenticated: false
+  timeframe: 5m
+  condition: selection | count() by source.ip >= 10
+fields:
+  - source.ip
+  - stocksense.endpoint
+  - stocksense.symbol
+falsepositives:
+  - A shared IP with several anonymous users browsing many stocks at once
+level: medium
+tags:
+  - attack.impact
+  - attack.t1496

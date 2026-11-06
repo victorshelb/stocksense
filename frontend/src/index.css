@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   THEME TOKENS
+   Each color in tailwind.config.js resolves to one of these
+   CSS variables (an "R G B" triple). Default = light "paper"
+   theme; the device's dark mode swaps the whole ramp below.
+   ============================================================ */
+:root {
+  color-scheme: light;
+
+  /* neutral surface / text ramp — light backgrounds, dark text */
+  --s-950: 245 241 232;  /* paper page bg   #f5f1e8 */
+  --s-900: 255 253 248;  /* card            #fffdf8 */
+  --s-800: 236 230 217;  /* borders / inputs / hover surfaces */
+  --s-700: 224 217 201;  /* borders */
+  --s-600: 150 152 160;  /* faint border / very muted text */
+  --s-500: 124 130 140;  /* muted text */
+  --s-400: 108 114 128;  /* muted text  #6c7280 */
+  --s-300: 74 82 96;     /* secondary text */
+  --s-200: 46 54 68;     /* body text */
+  --s-100: 34 41 54;     /* strong text */
+  --s-50:  28 35 48;     /* ink (headings) #1c2330 */
+
+  /* brand — indigo #4b46d6 */
+  --br-200: 231 227 255; /* brand-soft chip bg */
+  --br-300: 75 70 214;   /* deep — badge/teaser text on light tint */
+  --br-400: 75 70 214;   /* deep — links */
+  --br-500: 99 95 226;
+  --br-600: 75 70 214;   /* solid brand button */
+  --br-700: 60 56 180;
+  --br-800: 210 207 247;
+  --br-900: 226 223 250; /* light tint — soft badge bg */
+  --br-950: 237 235 252;
+
+  /* gain — green #16955f */
+  --gn-300: 13 110 70;
+  --gn-400: 13 120 76;
+  --gn-500: 22 149 95;
+  --gn-600: 19 130 83;
+  --gn-700: 16 110 70;
+  --gn-800: 200 230 211;
+  --gn-900: 224 243 232; /* gain-soft badge bg */
+  --gn-950: 235 247 240;
+
+  /* loss — red #dd5535 */
+  --ls-300: 176 58 28;
+  --ls-400: 192 64 34;
+  --ls-500: 221 85 53;
+  --ls-600: 205 70 40;
+  --ls-700: 170 55 32;
+  --ls-800: 244 205 192;
+  --ls-900: 251 230 222; /* loss-soft badge bg */
+  --ls-950: 252 238 233;
+
+  /* warning / gold — amber #efa31d */
+  --wn-300: 146 100 8;
+  --wn-400: 150 102 8;
+  --wn-500: 239 163 29;
+  --wn-600: 200 132 12;
+  --wn-700: 160 105 10;
+  --wn-800: 250 230 190;
+  --wn-900: 252 238 210; /* gold-soft badge bg */
+  --wn-950: 253 245 224;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --s-950: 8 12 24;
+    --s-900: 15 23 42;
+    --s-800: 30 41 59;
+    --s-700: 51 65 85;
+    --s-600: 71 85 105;
+    --s-500: 100 116 139;
+    --s-400: 148 163 184;
+    --s-300: 203 213 225;
+    --s-200: 226 232 240;
+    --s-100: 241 245 249;
+    --s-50:  248 250 252;
+
+    --br-200: 199 210 254;
+    --br-300: 165 180 252;
+    --br-400: 129 140 248;
+    --br-500: 99 102 241;
+    --br-600: 79 70 229;
+    --br-700: 67 56 202;
+    --br-800: 55 48 163;
+    --br-900: 49 46 129;
+    --br-950: 30 27 75;
+
+    --gn-300: 110 231 183;
+    --gn-400: 52 211 153;
+    --gn-500: 16 185 129;
+    --gn-600: 5 150 105;
+    --gn-700: 4 120 87;
+    --gn-800: 6 95 70;
+    --gn-900: 6 78 59;
+    --gn-950: 2 44 34;
+
+    --ls-300: 252 165 165;
+    --ls-400: 248 113 113;
+    --ls-500: 239 68 68;
+    --ls-600: 220 38 38;
+    --ls-700: 185 28 28;
+    --ls-800: 153 27 27;
+    --ls-900: 127 29 29;
+    --ls-950: 69 10 10;
+
+    --wn-300: 252 211 77;
+    --wn-400: 251 191 36;
+    --wn-500: 245 158 11;
+    --wn-600: 217 119 6;
+    --wn-700: 180 83 9;
+    --wn-800: 146 64 14;
+    --wn-900: 120 53 15;
+    --wn-950: 69 26 3;
+  }
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  background-color: rgb(var(--s-950));
+  color: rgb(var(--s-200));
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* prevent horizontal scroll on mobile */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Form controls don't inherit font-family by default */
+input, button, textarea, select { font: inherit; }
+
+/* Display font for headings, tickers, prices (all the bold weights) */
+h1, h2, h3, h4,
+.font-bold, .font-extrabold, .font-black {
+  font-family: 'Space Grotesk', 'DM Sans', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* ------------------------------------------------------------
+   text-white handling.
+   The app uses `text-white` both for headings (which must turn
+   to ink on the paper theme) and for labels sitting on solid
+   brand/semantic buttons (which must stay white). In light mode
+   plain text-white → ink, but the higher-specificity compound
+   selectors keep button/badge/avatar labels white. Dark mode
+   restores real white everywhere.
+   ------------------------------------------------------------ */
+.text-white { color: rgb(var(--s-50)); }
+
+.bg-blue-600.text-white,  .bg-blue-500.text-white,  .bg-blue-700.text-white,
+.bg-indigo-600.text-white, .bg-indigo-700.text-white,
+.bg-emerald-600.text-white, .bg-emerald-500.text-white,
+.bg-green-600.text-white,
+.bg-red-600.text-white,   .bg-red-500.text-white,
+.bg-amber-600.text-white,
+[class*="bg-gradient"].text-white {
+  color: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .text-white { color: #fff; }
+}
+
+/* Make embedded TradingView widgets and tables behave on small screens */
+.tradingview-widget-container { max-width: 100%; }
+
+/* Skeleton shimmer animation (theme-aware) */
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--s-800)) 25%,
+    rgb(var(--s-700)) 50%,
+    rgb(var(--s-800)) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 0.5rem;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: rgb(var(--s-900)); }
+::-webkit-scrollbar-thumb { background: rgb(var(--s-700)); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--s-600)); }
+
+/* ============================================================
+   MOTION — tasteful, Apple-ish entrances & micro-interactions
+   ============================================================ */
+
+/* staggered card / element entrance */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px) scale(.98); }
+  to   { opacity: 1; transform: none; }
+}
+.animate-rise { animation: rise-in .6s cubic-bezier(.22,.7,.24,1) both; }
+
+/* headline / hero fade-up */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+.animate-fade-up { animation: fade-up .7s cubic-bezier(.22,.7,.24,1) both; }
+
+/* scroll-reveal: element starts hidden, .is-visible (set by observer) reveals it */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s cubic-bezier(.22,.7,.24,1), transform .7s cubic-bezier(.22,.7,.24,1); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* live ticker marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 42s linear infinite; }
+.marquee-mask { -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+
+/* animated gradient sweep for the hero accent */
+@keyframes gradient-pan {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+.animate-gradient { background-size: 200% 200%; animation: gradient-pan 8s ease infinite; }
+
+/* soft looping glow for the hero backdrop orbs */
+@keyframes float-orb {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(12px, -16px) scale(1.08); }
+}
+.animate-orb { animation: float-orb 11s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise, .animate-fade-up, .animate-marquee, .animate-gradient, .animate-orb { animation: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}

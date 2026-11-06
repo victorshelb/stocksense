@@ -1,0 +1,31 @@
+title: StockSense - Account Enumeration
+id: 9d2e1a4b-3c5f-4d6a-8b2c-1e3f4a5b6c7d
+status: experimental
+description: >
+  A single source IP probing many email addresses that do not exist (or already
+  exist) in a short window — a classic account / username enumeration sweep used
+  to build a target list before a brute-force or spray.
+references:
+  - https://attack.mitre.org/techniques/T1589/002/
+author: SOC Lab (StockSense)
+date: 2026/06/27
+logsource:
+  product: stocksense
+  service: security
+detection:
+  selection:
+    stocksense.reason:
+      - 'user_not_found'
+      - 'email_exists'
+  timeframe: 10m
+  condition: selection | count() by source.ip >= 8
+fields:
+  - source.ip
+  - user.email
+  - event.code
+falsepositives:
+  - Shared corporate NAT egress with many legitimate first-time users
+level: medium
+tags:
+  - attack.reconnaissance
+  - attack.t1589.002

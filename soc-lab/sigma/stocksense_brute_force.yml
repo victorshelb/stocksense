@@ -1,0 +1,28 @@
+title: StockSense - Credential Brute Force
+id: 6b1c0f8a-7e2d-4c9a-9b1e-0a1f2c3d4e5a
+status: experimental
+description: >
+  Five or more failed logins from a single source IP within 5 minutes,
+  indicating a credential brute-force attempt against the StockSense login API.
+references:
+  - https://attack.mitre.org/techniques/T1110/
+author: SOC Lab (StockSense)
+date: 2026/06/27
+logsource:
+  product: stocksense
+  service: security
+detection:
+  selection:
+    event.code: 'auth.login.failure'
+  timeframe: 5m
+  condition: selection | count() by source.ip >= 5
+fields:
+  - source.ip
+  - user.email
+  - stocksense.reason
+falsepositives:
+  - A user repeatedly mistyping their password (usually < 5, single account)
+level: high
+tags:
+  - attack.credential_access
+  - attack.t1110
